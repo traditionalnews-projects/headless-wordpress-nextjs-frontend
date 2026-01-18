@@ -13,7 +13,7 @@ const GET_POST_BY_SLUG = `
 
 const GET_ALL_POST_SLUGS = `
   query GetAllPostSlugs {
-    posts(first: 100) { // Adjust 'first' as needed for your site's scale
+    posts(first: 100) { # Adjust 'first' as needed for your site's scale
       nodes {
         slug
       }
