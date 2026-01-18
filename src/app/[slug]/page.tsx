@@ -28,10 +28,13 @@ export async function generateStaticParams() {
     .map((post: any) => ({
       slug: post.slug,
     }))
-    .filter((params: { slug: string | null | undefined }) => params.slug !== null && params.slug !== undefined); // Added filter
+    .filter((params: { slug: string | null | undefined }) => params.slug !== null && params.slug !== undefined);
 }
 
 export default async function PostPage({ params }: { params: { slug: string } }) {
+  // Debug log to check the slug value
+  console.log('Fetching post for slug:', params.slug);
+
   const { post } = await fetchGraphQL(GET_POST_BY_SLUG, {
     variables: { slug: params.slug },
   });
