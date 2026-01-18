@@ -64,12 +64,10 @@ export async function generateStaticParams() {
     .filter((params: { slug: string | null | undefined }) => params.slug !== null && params.slug !== undefined);
 }
 
-export default async function PostPage({ params }: { params: { slug: string } }) {
+export default async function PostPage({ params }: { params: { slug: string } }) => {
   console.log('Fetching post for slug:', params.slug);
 
-  // Provide a fallback slug if params.slug is unexpectedly undefined during build
-  // This is a TEMPORARY HACK to allow the build to pass and inspect the deployed site
-  const actualSlug = params.slug || 'hello-world'; // Use 'hello-world' as a known existing slug
+  const actualSlug = params.slug || 'hello-world';
 
   const { post } = await fetchGraphQL(GET_POST_BY_SLUG, {
     variables: { slug: actualSlug },
@@ -79,14 +77,13 @@ export default async function PostPage({ params }: { params: { slug: string } })
     notFound();
   }
 
+  // Simplified return for debugging Turbopack parsing error
   return (
-    <main style={{ padding: '20px' }}>
-      <Link href="/">← Back to all posts</Link>
-      <h1 style={{ marginTop: '20px' }}>{post.title}</h1>
-      <div dangerouslySetInnerHTML={{ __html: post.content }} />
+    <main>
+      <h1>{post.title}</h1>
     </main>
   );
-}
+};
 
   if (!post) {
     notFound();
