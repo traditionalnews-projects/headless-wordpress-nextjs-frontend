@@ -64,7 +64,7 @@ export async function generateStaticParams() {
     .filter((params: { slug: string | null | undefined }) => params.slug !== null && params.slug !== undefined);
 }
 
-export default async function PostPage({ params }: { params: { slug: string } }) => {
+export default async function PostPage({ params }: { params: { slug: string } }) {
   console.log('Fetching post for slug:', params.slug);
 
   const actualSlug = params.slug || 'hello-world';
