@@ -1,5 +1,6 @@
 import { fetchGraphQL } from '../../lib/api';
 import { notFound } from 'next/navigation';
+import Link from 'next/link';
 
 const GET_POST_BY_SLUG = `
   query GetPostBySlug($slug: ID!) {
@@ -23,9 +24,11 @@ const GET_ALL_POST_SLUGS = `
 export async function generateStaticParams() {
   const { posts } = await fetchGraphQL(GET_ALL_POST_SLUGS);
 
-  return posts.nodes.map((post: any) => ({
-    slug: post.slug,
-  }));
+  return posts.nodes
+    .map((post: any) => ({
+      slug: post.slug,
+    }))
+    .filter((params: { slug: string | null | undefined }) => params.slug !== null && params.slug !== undefined); // Added filter
 }
 
 export default async function PostPage({ params }: { params: { slug: string } }) {
